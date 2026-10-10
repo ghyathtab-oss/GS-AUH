@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0d3b40">
+  <meta name="robots" content="noindex,nofollow">
+  <title>لوحة الإدارة | GS-AUH</title>
+  <meta name="description" content="لوحة مدير GS-AUH لإضافة محاضرات HTML وPDF وتحرير بطاقاتها ونشرها.">
+  <link rel="icon" type="image/svg+xml" href="../assets/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/admin.css">
+  <script type="module" src="../assets/admin.js"></script>
+</head>
+<body>
+  <header class="admin-topbar">
+    <div class="shell top-inner">
+      <a href="../index.html" class="identity"><span class="brand-icon">✳</span><span><strong>GS-AUH</strong><small>منصة المحاضرات الطبية</small></span></a>
+      <div class="top-links"><a href="../index.html">↗ عرض الموقع</a><span class="top-chip">ADMIN CONSOLE</span></div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="intro">
+      <div><span class="eyebrow">CONTENT MANAGEMENT · GS-AUH</span><h1>لوحة <em>إدارة المحاضرات</em></h1><p>ارفع ملفات HTML أو PDF، وعدّل بيانات المحاضرات، وانشرها من مكان واحد دون تعديل GitHub.</p></div>
+      <span class="lock-pill" aria-label="لوحة محمية">♢ مساحة إدارة محمية</span>
+    </section>
+
+    <div id="feedback" class="feedback" hidden role="status" aria-live="polite"></div>
+
+    <section id="setupPanel" class="setup-panel" hidden>
+      <div class="setup-icon">⚙</div><h2>يلزم ربط لوحة الإدارة قبل استخدامها</h2>
+      <p>الواجهة جاهزة، لكن يلزم ربط مشروع Supabase وتنفيذ قواعد الصلاحيات لإنشاء حساب مدير حقيقي.</p>
+      <div class="setup-steps"><span>1. أنشئ مشروع Supabase</span><span>2. نفّذ medatlas-supabase.sql</span><span>3. ضع URL والمفتاح العام في <code>assets/supabase-config.js</code></span><span>4. أنشئ مستخدم Auth وأضف UUID إلى جدول المدراء</span></div>
+      <p class="small-note">راجع ملف <code>SUPABASE_SETUP_AR.md</code> المرفق بالمشروع للتعليمات الكاملة.</p>
+    </section>
+
+    <section id="loginPanel" class="auth-layout" hidden aria-labelledby="loginHeading">
+      <div class="login-copy"><span class="eyebrow">SECURE SIGN-IN</span><h2>تحكّم بالمحتوى،<br>من واجهة واحدة.</h2><p>للوصول إلى رفع المحاضرات وتحريرها، سجّل الدخول بحسابك الوحيد المعتمد في Supabase.</p><ul><li>لا تُخزَّن كلمات المرور في كود الموقع.</li><li>لا يستطيع المستخدم العادي تعديل البيانات.</li><li>يمكن إنهاء الجلسة في أي وقت.</li></ul></div>
+      <form id="loginForm" class="login-card">
+        <div class="login-mark">✳</div><h2 id="loginHeading">دخول المدير</h2><p>بيانات حساب الإدارة المصرّح له</p>
+        <label for="email">البريد الإلكتروني</label><input id="email" name="email" type="email" autocomplete="username" placeholder="admin@example.com" required>
+        <label for="password">كلمة المرور</label><input id="password" name="password" type="password" autocomplete="current-password" required>
+        <button id="loginButton" type="submit" class="action primary-action">تسجيل الدخول ←</button>
+        <small>هذا الحساب تنشئه أنت في Supabase Authentication؛ لا توجد كلمة مرور افتراضية.</small>
+      </form>
+    </section>
+
+    <section id="dashboard" class="dashboard" hidden>
+      <div class="dashboard-head"><div><span class="eyebrow">LECTURE EDITOR</span><h2>إدارة المحاضرات والملفات</h2><p id="accountName">—</p></div><div class="dashboard-actions"><span class="connected"><i></i> متصل بقاعدة البيانات</span><button class="action subtle" type="button" id="logoutButton">تسجيل الخروج</button></div></div>
+      <div class="stat-row"><div><small>المحاضرات المسجّلة</small><strong id="totalLectures">0</strong></div><div><small>محاضرات منشورة</small><strong id="modifiedCount">0</strong></div><div><small>المحاضرة المحدّدة</small><strong id="activeLectureStat">—</strong></div></div>
+      <div class="edit-grid">
+        <aside class="sidebar-list"><div class="sidebar-heading"><h3>المحاضرات</h3><span id="sidebarCount">0</span></div><div class="sidebar-new"><button type="button" id="newLecture" class="action primary-action">＋ إضافة محاضرة / رفع ملف</button></div><label class="search-label"><span>⌕</span><input id="filterInput" type="search" placeholder="ابحث عن محاضرة..." aria-label="البحث في المحاضرات"></label><div id="lectureList" class="lecture-list"></div><div class="sidebar-tip">ارفع ملف HTML مستقل أو PDF هنا. تُحفظ المحاضرات الجديدة في Supabase Storage وتُضاف للمكتبة عند اختيار «إظهار للزوار».</div></aside>
+        <div class="editor">
+          <div class="editor-head"><div><span class="eyebrow">CARD DETAILS</span><h3 id="editorTitle">تحرير المحاضرة</h3><p id="editingId">اختر محاضرة للتعديل</p></div><span class="editor-mark">✎</span></div>
+          <form id="editForm" class="edit-form" hidden>
+            <div class="field" id="slugField"><label for="slugInput">رمز رابط المحاضرة باللغة الإنجليزية <span>*</span></label><input id="slugInput" name="slug" maxlength="80" dir="ltr" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="acute-pancreatitis" required><small>لا يمكن تغيير الرمز بعد إنشاء المحاضرة. أحرف صغيرة وأرقام وشرطة - فقط.</small></div>
+            <div class="field"><label for="titleInput">عنوان المحاضرة <span>*</span></label><input id="titleInput" name="title" maxlength="180" required placeholder="مثال: المقاربة التشخيصية لألم البطن"></div>
+            <div class="field"><label for="lecturerInput">اسم مقدّم المحاضرة</label><input id="lecturerInput" name="lecturer" maxlength="140" placeholder="مثال: د. أحمد ..."></div>
+            <div class="field"><label for="subtitleInput">وصف مختصر</label><textarea id="subtitleInput" name="subtitle" rows="3" maxlength="450" placeholder="وصف يظهر تحت العنوان"></textarea></div>
+            <div class="field-pair"><div class="field"><label for="statusInput">حالة المحاضرة</label><select id="statusInput" name="status"><option>منشورة</option><option>قيد المراجعة العلمية</option><option>قيد الإعداد</option><option>قريباً</option><option>مؤرشفة</option></select></div><div class="field"><label for="categoryInput">التخصص</label><input id="categoryInput" name="category" maxlength="110" required></div></div>
+            <div class="field"><label for="levelInput">المستوى</label><select id="levelInput" name="level"><option>تمهيدي</option><option>متوسط</option><option>متقدم</option><option>جميع المستويات</option></select></div>
+            <div class="file-panel">
+              <div class="file-header"><span class="file-symbol">⇧</span><div><strong>ملف المحاضرة</strong><small>HTML تفاعلي أو PDF — الحد الأقصى 30 MB</small></div></div>
+              <label class="upload-target" for="lectureFile"><span>اختر ملف المحاضرة من جهازك</span><small>HTML / PDF · ملف واحد لكل محاضرة</small></label>
+              <input id="lectureFile" type="file" accept=".html,.htm,.pdf,text/html,application/pdf">
+              <div id="fileDetails" class="file-details">لم يُحدَّد ملف جديد بعد.</div>
+              <a id="filePreviewLink" class="preview-link" target="_blank" rel="noopener noreferrer" hidden>↗ معاينة الملف الحالي</a>
+              <p class="file-warning">لـ HTML: يُفضّل ملف مستقل يحتوي التنسيق والسكربتات داخله. تُعرض صفحات HTML في إطار معزول أمنياً؛ بعض الوظائف التي تحتاج نفس النطاق أو ملفات محلية مرفقة قد لا تعمل.</p>
+            </div>
+            <label class="visibility-choice"><input type="checkbox" id="visibleInput"><span><strong>إظهار المحاضرة للزوار</strong><small>أبقِ الخيار غير مفعّل أثناء المراجعة، ثم فعّله عند اعتماد النشر. حالة المحاضرة المعروضة مستقلة عن هذا الخيار.</small></span></label>
+            <div class="preview-heading"><span>معاينة البطاقة</span><small>كما ستظهر في المكتبة</small></div>
+            <div class="live-preview" id="cardPreview"><div class="preview-banner"><span id="previewStatus"></span><span class="preview-art">✳</span></div><div class="preview-content"><small id="previewCategory"></small><h4 id="previewTitle"></h4><div id="previewLecturer"></div><p id="previewSubtitle"></p></div></div>
+            <div class="editor-actions"><button id="saveButton" class="action primary-action" type="submit">حفظ التغييرات ←</button><button id="cancelButton" class="action outline" type="button">إلغاء</button> <button id="deleteButton" class="action danger-action" type="button" hidden>حذف المحاضرة</button></div>
+            <div class="info-line">صلاحية تعديل المحاضرات والملفات محمية بواسطة Supabase RLS. لا يظهر زر الإدارة للزوار. الملفات المخزنة في الحاوية العامة قد تبقى قابلة للفتح لمن يعرف رابطها، حتى إن كانت المحاضرة مخفية من الفهرس.</div>
+          </form>
+          <div id="emptyEditor" class="editor-empty"><span>✎</span><p>اختر محاضرة من القائمة لعرض بياناتها وتعديلها.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer shell"><span>GS-AUH / إدارة محتوى المحاضرات</span><span>رفع المحاضرة أو نشرها لا يعني اجتيازها المراجعة العلمية.</span></footer>
+</body>
+</html>

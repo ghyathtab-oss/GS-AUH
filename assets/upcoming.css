@@ -1,0 +1,37 @@
+/* Upcoming lectures — decorative cards; lecture availability is driven only by data/lectures.json. */
+.upcoming{position:relative;isolation:isolate;background:var(--bg)}
+.upcoming-head{align-items:center;margin-bottom:30px}
+.upcoming-head p{max-width:720px;line-height:1.9}
+.upcoming-heading-accent{color:var(--teal-bright)}
+.upcoming-head-label{display:inline-flex;align-items:center;gap:9px;flex:none;border:1px solid var(--line);padding:10px 14px;border-radius:50px;background:var(--panel);font-size:12px;font-weight:900;color:var(--ink-soft)}
+.upcoming-dot,.upcoming-status-dot{width:8px;height:8px;display:inline-block;background:#d0a85d;border-radius:100%}
+.upcoming-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:21px}
+.upcoming-card{--upcoming-shade:#e1f1ea;--upcoming-strong:#245d57;display:flex;min-width:0;flex-direction:column;border:1px solid var(--line);border-radius:21px;overflow:hidden;background:var(--panel);box-shadow:0 16px 42px #102c3010;transition:transform .22s ease,box-shadow .22s ease}
+.upcoming-card:hover{transform:translateY(-5px);box-shadow:0 25px 50px #102c301b}
+.upcoming-card.theme-bleeding{--upcoming-shade:#f4e5d9;--upcoming-strong:#995943}
+.upcoming-card.theme-abdomen{--upcoming-shade:#e6edf2;--upcoming-strong:#466a81}
+.upcoming-visual{height:197px;position:relative;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 75% 23%,#ffffff92,transparent 45%),var(--upcoming-shade);color:var(--upcoming-strong);overflow:hidden}
+.upcoming-visual:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.3;background-image:linear-gradient(to left,currentColor 1px,transparent 1px),linear-gradient(to bottom,currentColor 1px,transparent 1px);background-size:35px 35px;mask-image:linear-gradient(to left,transparent,black 55%,transparent)}
+.upcoming-number{position:absolute;z-index:1;right:20px;top:16px;display:flex;gap:8px;align-items:baseline;font-size:22px;line-height:1;font-weight:900;direction:ltr}
+.upcoming-number span{font-family:Arial,sans-serif;letter-spacing:1.2px;font-size:8px;font-weight:700;opacity:.7}
+.upcoming-illustration{width:min(92%,300px);height:145px;z-index:1;filter:drop-shadow(0 10px 12px #244f4516);margin-top:20px}
+.upcoming-visual-label{position:absolute;z-index:1;left:20px;bottom:16px;font:700 9px Arial,sans-serif;letter-spacing:1.5px;opacity:.7;direction:ltr}
+.upcoming-card-body{flex:1;display:flex;flex-direction:column;padding:26px 23px 22px}
+.upcoming-category{font-size:12px;color:var(--teal-bright);font-weight:900}
+.upcoming-card h3{font-size:clamp(20px,2vw,23px);line-height:1.45;margin:11px 0 10px;color:var(--ink)}
+.upcoming-card-body>p{color:var(--ink-soft);font-size:14px;line-height:1.95;margin:0 0 23px;flex:1}
+.upcoming-card-bottom{border-top:1px solid var(--line);padding-top:15px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.upcoming-status{display:inline-flex;align-items:center;gap:7px;color:var(--ink-soft);font-size:12px;font-weight:900;background:var(--bg);padding:6px 11px;border-radius:8px}
+.upcoming-keyword{font:700 10px Arial,sans-serif;letter-spacing:1px;color:var(--ink-soft);opacity:.65;direction:ltr}
+.upcoming-note{margin-top:25px;padding:16px 20px;display:flex;gap:12px;align-items:center;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+.upcoming-note-icon{color:var(--teal-bright);font-size:20px}
+.upcoming-note p{margin:0;color:var(--ink-soft);font-size:13px;flex:1}
+.upcoming-note a{color:var(--teal-bright);text-decoration:none;font-size:13px;font-weight:900;white-space:nowrap}
+.upcoming-note a:hover{text-decoration:underline}
+.dark-mode .upcoming-card{box-shadow:none}
+.dark-mode .upcoming-card.theme-pancreas{--upcoming-shade:#214d49;--upcoming-strong:#b4e6d1}
+.dark-mode .upcoming-card.theme-bleeding{--upcoming-shade:#513b35;--upcoming-strong:#e8b59c}
+.dark-mode .upcoming-card.theme-abdomen{--upcoming-shade:#304b5c;--upcoming-strong:#bdddec}
+@media(max-width:980px){.upcoming-grid{gap:14px}.upcoming-card-body{padding:22px 18px 20px}.upcoming-keyword{font-size:9px}}
+@media(max-width:760px){.upcoming-grid{grid-template-columns:1fr;max-width:540px;margin-inline:auto;gap:19px}.upcoming-head{align-items:flex-start;flex-direction:column}.upcoming-visual{height:190px}.upcoming-note{flex-wrap:wrap}.upcoming-note a{width:100%;margin-right:33px}}
+@media(prefers-reduced-motion:reduce){.upcoming-card{transition:none}}

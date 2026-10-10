@@ -1,0 +1,30 @@
+[
+  {
+    "id": "ruq-pain",
+    "title": "المقاربة التشخيصية لألم الربع العلوي الأيمن",
+    "subtitle": "من القصة المرضية حتى الخوارزميات التشخيصية والتفريق بين 30 سبباً",
+    "category": "الجراحة العامة",
+    "track": "الجراحة العامة والجهاز الهضمي",
+    "level": "متقدم",
+    "language": "العربية",
+    "status": "قيد المراجعة العلمية",
+    "lecturer": "",
+    "updated": "2026-10-10",
+    "href": "lectures/ruq-pain/index.html",
+    "cover": "lectures/ruq-pain/assets/preview-desktop.png",
+    "features": [
+      "30 تشخيصاً",
+      "4 خوارزميات",
+      "حالات سريرية تفاعلية"
+    ],
+    "keywords": [
+      "RUQ",
+      "المرارة",
+      "الأقنية الصفراوية",
+      "biliary",
+      "cholecystitis",
+      "الجراحة",
+      "البطن"
+    ]
+  }
+]
